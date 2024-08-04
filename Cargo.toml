@@ -1,0 +1,14 @@
+[package]
+name = "unicode_extension"
+version = "0.1.0"
+edition = "2021"
+licence-file = "UNLICENSE"
+description = "Extension of the Unicode Segmentation crate allowing you to use a list of clusters as if they were a String"
+repository = "https://github.com/SimonTheoret/unicode_extension"
+readme = "README.md"
+keyword = ["String", "str", "Unicode", "Clusters", "ClustersVec", "UnicodeSegmentation", "UnicodeExtension"]
+categories = ["data-structures", "internationalization", "text-processing"]
+
+[dependencies]
+itertools = "0.13.0"
+unicode-segmentation = "1.11.0"
