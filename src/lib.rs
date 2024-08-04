@@ -4,8 +4,8 @@ mod owned_clusters;
 
 use clusters::{ByteOffset, Clusters, GraphemeOffset};
 
-pub use self::owned_clusters::OwnedClustersVec;
 pub use self::borrowed_clusters::BorrowedClustersVec;
+pub use self::owned_clusters::OwnedClustersVec;
 
 /// Full result of the diff.
 type DiffResult<'a, T> = ((usize, (&'a T, &'a usize)), (&'a T, &'a usize));
@@ -16,11 +16,13 @@ pub trait UnicodeExtension<T> {
     /// should have the same length.
     fn clusters_indices(&self) -> (&Clusters<T>, &Vec<ByteOffset>);
     // TODO: modif this part of the documentation
+    /// This function can be used to find the first index at which two
+    /// GraphemeClusters start to differ.
     /// Returns the first pair of different elements of `Clusters` of
     /// `self` and the `Clusters` of `other`. Element potentially
     /// different are filtered with closure `find`. This closure
     /// returns a bool, specifying if the element should be considered
-    /// or not. This function clones the elements of type `T`.
+    /// or not. This method clones the elements of type `T`.
     fn find_difference<F>(&self, other: &Self, find: F) -> Option<ClustersDiff<T>>
     where
         F: Fn(&((GraphemeOffset, (&T, &usize)), (&T, &usize))) -> bool,
@@ -59,7 +61,6 @@ pub trait UnicodeExtension<T> {
         ClustersOffsetDiff::try_new(diff)
     }
 }
-
 
 #[derive(Debug, Clone)]
 pub struct ClustersDiff<T>

@@ -15,10 +15,10 @@ pub struct Clusters<T>(Vec<T>);
 
 impl<'a, T> Clusters<T> {
     /// Build a new cluster from `s`, which implements
-    /// `UnicodeSegmentation`, with function `f`, which takes a reference
-    /// to a GraphemeCluster, and returns the generic type `T`. This
-    /// function also returns the `Vec` of `ByteOffset` associated with the
-    /// clusters.
+    /// `UnicodeSegmentation`. Function `f`, which takes a reference
+    /// to a GraphemeCluster, returns the generic type `T`. This
+    /// function also returns the `Vec` of `ByteOffset` associated
+    /// with the clusters.
     pub(crate) fn new<S, F>(s: &'a S, f: F, is_extended: bool) -> (Clusters<T>, Vec<ByteOffset>)
     where
         S: UnicodeSegmentation,
