@@ -38,6 +38,10 @@ impl<'a, T> Clusters<T> {
 
         (Clusters(clusters), offsets)
     }
+    /// Function used only for testing purposes.
+    pub (crate) fn new_test(content: Vec<T>) -> Clusters<T>{
+        Clusters(content)
+    }
 }
 
 impl From<Clusters<String>> for String {
@@ -87,8 +91,7 @@ mod tests {
     }
 
     fn owned_sentence() -> String {
-        let owned = String::from("This is a test sentence");
-        owned
+        String::from("This is a test sentence")
     }
     #[test]
     fn test_new_cluster<'a>() {

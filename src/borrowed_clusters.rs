@@ -2,6 +2,7 @@ use unicode_segmentation::UnicodeSegmentation;
 
 use crate::{clusters::Clusters, UnicodeExtension};
 
+#[derive(Debug, PartialEq, Clone)]
 pub struct BorrowedClustersVec<'a> {
     clusters: Clusters<&'a str>,
     indices: Vec<usize>,
@@ -31,5 +32,30 @@ impl<'a> BorrowedClustersVec<'a> {
 impl<'a> UnicodeExtension<&'a str> for BorrowedClustersVec<'a> {
     fn clusters_indices(&self) -> (&Clusters<&'a str>, &Vec<crate::clusters::ByteOffset>) {
         (&self.clusters, &self.indices)
+    }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    fn short_owned_sentence() -> String {
+        String::from("Étiré")
+    }
+
+    fn owned_sentence() -> String {
+        String::from("This is a test sentence")
+    }
+    #[test]
+    fn test_new_cluster() {
+        let sentences = short_owned_sentence().leak();
+        let is_extended = true;
+        let c = BorrowedClustersVec::new(sentences, is_extended);
+        let expected_clusters = Clusters::new_test(vec!["É", "t", "i", "r", "é"]);
+        let expected_indices = vec![0, 2, 3, 4, 5];
+        let expected_borrow_clusters_vec = BorrowedClustersVec {
+            clusters: expected_clusters,
+            indices: expected_indices,
+            is_extended,
+        };
+        assert_eq!(c, expected_borrow_clusters_vec);
     }
 }
