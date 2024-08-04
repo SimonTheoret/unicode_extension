@@ -42,15 +42,12 @@ mod tests {
         String::from("Étiré")
     }
 
-    fn owned_sentence() -> String {
-        String::from("This is a test sentence")
-    }
     #[test]
     fn test_new_cluster() {
         let sentences = short_owned_sentence().leak();
         let is_extended = true;
         let c = OwnedClustersVec::new(sentences, is_extended);
-        let expected_clusters: Clusters<String> = Clusters::new_test(
+        let expected_clusters: Clusters<String> = Clusters::new_from_raw(
             vec!["É", "t", "i", "r", "é"]
                 .into_iter()
                 .map(str::to_owned)

@@ -39,7 +39,8 @@ impl<'a, T> Clusters<T> {
         (Clusters(clusters), offsets)
     }
     /// Function used only for testing purposes.
-    pub (crate) fn new_test(content: Vec<T>) -> Clusters<T>{
+    #[allow(dead_code)]
+    pub(crate) fn new_from_raw(content: Vec<T>) -> Clusters<T>{
         Clusters(content)
     }
 }
@@ -90,9 +91,6 @@ mod tests {
         String::from("Étiré")
     }
 
-    fn owned_sentence() -> String {
-        String::from("This is a test sentence")
-    }
     #[test]
     fn test_new_cluster<'a>() {
         let sentences = short_owned_sentence().leak();

@@ -41,15 +41,12 @@ mod tests {
         String::from("Étiré")
     }
 
-    fn owned_sentence() -> String {
-        String::from("This is a test sentence")
-    }
     #[test]
     fn test_new_cluster() {
         let sentences = short_owned_sentence().leak();
         let is_extended = true;
         let c = BorrowedClustersVec::new(sentences, is_extended);
-        let expected_clusters = Clusters::new_test(vec!["É", "t", "i", "r", "é"]);
+        let expected_clusters = Clusters::new_from_raw(vec!["É", "t", "i", "r", "é"]);
         let expected_indices = vec![0, 2, 3, 4, 5];
         let expected_borrow_clusters_vec = BorrowedClustersVec {
             clusters: expected_clusters,
