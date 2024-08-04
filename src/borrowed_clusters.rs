@@ -10,7 +10,7 @@ pub struct BorrowedClustersVec<'a> {
 impl<'a> BorrowedClustersVec<'a> {
     pub fn new<S>(s: &'a S, is_extended: bool) -> BorrowedClustersVec<'a>
     where
-        S: UnicodeSegmentation,
+        S: UnicodeSegmentation + ?Sized,
     {
         let f = |x: &'a str| -> &'a str { x }; // Identity function
 

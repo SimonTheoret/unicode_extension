@@ -11,6 +11,7 @@ pub type GraphemeCluster = str;
 /// position in a cluster.
 pub type GraphemeOffset = usize;
 
+#[derive(Debug, Clone, PartialEq)]
 pub struct Clusters<T>(Vec<T>);
 
 impl<'a, T> Clusters<T> {
@@ -21,7 +22,7 @@ impl<'a, T> Clusters<T> {
     /// with the clusters.
     pub(crate) fn new<S, F>(s: &'a S, f: F, is_extended: bool) -> (Clusters<T>, Vec<ByteOffset>)
     where
-        S: UnicodeSegmentation,
+        S: UnicodeSegmentation + ?Sized,
         F: FnMut(&'a GraphemeCluster) -> T,
         T: 'a,
     {
@@ -76,5 +77,27 @@ impl<T> IntoIterator for Clusters<T> {
     type IntoIter = std::vec::IntoIter<Self::Item>;
     fn into_iter(self) -> Self::IntoIter {
         self.0.into_iter()
+    }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    fn short_owned_sentence() -> String {
+        String::from("Étiré")
+    }
+
+    fn owned_sentence() -> String {
+        let owned = String::from("This is a test sentence");
+        owned
+    }
+    #[test]
+    fn test_new_cluster<'a>() {
+        let sentences = short_owned_sentence().leak();
+        let id = |x: &'a GraphemeCluster| -> &'a GraphemeCluster { x };
+        let (c, i) = Clusters::new(sentences, id, true);
+        let expected_clusters = Clusters(vec!["É", "t", "i", "r", "é"]);
+        let expected_indices = vec![0, 2, 3, 4, 5];
+        assert_eq!(c, expected_clusters);
+        assert_eq!(i, expected_indices);
     }
 }
