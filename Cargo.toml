@@ -10,5 +10,4 @@ keyword = ["String", "str", "Unicode", "Clusters", "ClustersVec", "UnicodeSegmen
 categories = ["data-structures", "internationalization", "text-processing"]
 
 [dependencies]
-itertools = "0.13.0"
 unicode-segmentation = "1.11.0"
