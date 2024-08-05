@@ -1,6 +1,6 @@
 [package]
 name = "unicode_extension"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 license-file = "Unlicense.txt"
 description = "Extension of the Unicode Segmentation crate allowing you to use a list of clusters as if they were a String"
