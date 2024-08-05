@@ -40,7 +40,7 @@ impl<'a, T> Clusters<T> {
     }
     /// Function used only for testing purposes.
     #[allow(dead_code)]
-    pub(crate) fn new_from_raw(content: Vec<T>) -> Clusters<T>{
+    pub(crate) fn new_from_raw(content: Vec<T>) -> Clusters<T> {
         Clusters(content)
     }
 }
